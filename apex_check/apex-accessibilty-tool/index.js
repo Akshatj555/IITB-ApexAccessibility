@@ -29,7 +29,7 @@ require('./app')(config, (error, app) => {
 	}
 
 	console.log('');
-	console.log(kleur.underline().magenta('Pa11y Dashboard started'));
+	console.log(kleur.underline().magenta('Apex Dashboard started'));
 	console.log(kleur.grey('mode: %s'), process.env.NODE_ENV);
 	console.log(kleur.grey('uri:  %s'), app.address);
 
@@ -50,7 +50,7 @@ require('./app')(config, (error, app) => {
 			}
 
 			console.log('');
-			console.log(kleur.underline().cyan('Pa11y Webservice started'));
+			console.log(kleur.underline().cyan('Apex Webservice started'));
 			console.log(kleur.grey('mode:     %s'), process.env.NODE_ENV);
 			console.log(kleur.grey('uri:      %s'), webservice.server.info.uri);
 			console.log(kleur.grey('database: %s'), config.webservice.database);

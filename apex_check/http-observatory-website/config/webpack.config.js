@@ -34,7 +34,23 @@ plugins = [
       to: 'fonts/'
     },
     {
-      from: 'src/misc'
+      from: 'Reveal/assets/css',
+      to: 'assets/css'
+    },
+    {
+      from: 'Reveal/assets/img',
+      to: 'assets/img'
+    },
+    {
+      from: 'Reveal/assets/js',
+      to: 'assets/js'
+    },
+    {
+      from: 'Reveal/assets/vendor',
+      to: 'assets/vendor'
+    },
+    {
+       from: 'src/misc'
     }
   ]),
   new webpack.ProvidePlugin({
@@ -47,7 +63,12 @@ plugins = [
   }),
   new HtmlWebpackPlugin({
     filename: 'index.html',
-    title: 'Mozilla Observatory',
+    title: 'Apex Accessibility',
+    template: 'Reveal/index.html'
+  }),
+  new HtmlWebpackPlugin({
+    filename: 'home.html',
+    title: 'Apex Accessibility',
     template: 'src/templates/index.html'
   }),
   new HtmlWebpackPlugin({

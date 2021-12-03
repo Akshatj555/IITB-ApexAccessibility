@@ -101,7 +101,7 @@ function getStandards() {
 				},
 				{
 					name: 'Section508.D.HiddenText',
-					description: 'If content is hidden and made visible using scripting (such as "click to expand" sections), ensure this content is readable when scripts and style sheets are disabled.'
+					description: 'If content is hidden and made visible using scripting (such as "click to expand" sections), ensure this content is reSection508ble when scripts and style sheets are disabled.'
 				},
 				{
 					name: 'Section508.D.[msgCode]',

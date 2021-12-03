@@ -24,8 +24,7 @@
     "node": ">=8",
     "npm": ">=6"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "scripts": {
     "dev": "(cd 'http-observatory-website' && npm run watch && cd ..) & (cd 'apex-accessibilty-tool' && PORT=8080 node index.js && cd ..)",
     "install": "(cd 'http-observatory-website' && npm install && cd ..) & (cd 'apex-accessibilty-tool' && npm install && cd ..)",
