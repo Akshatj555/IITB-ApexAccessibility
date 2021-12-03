@@ -1,5 +1,11 @@
 # IITB-ApexAccessibility
 
+Apex Accessiblity is a Node.js application and requires a stable or LTS version of Node, currently version 12 or 14.
+
+Apex Accessiblity uses a MongoDB database to store the results of the tests.
+
+Apex Accessiblity uses puppeteer to create a headless instance of the Chromium browser in order to run the tests. On certain environments this may require additional dependencies to be installed. For example, in Debian/Ubuntu systems you may need to install the libnss3 and libgconf-2-4 libraries in order to be able to run tests on Apex Accessiblity ADA Dashboard.
+
 ## Requirements : 
 
 - Node JS
@@ -35,20 +41,31 @@ service mongod start
 Step-by-step installation steps in Windows, Linux, MAC or docker  : [MongoDB Installation](https://docs.mongodb.com/manual/installation/)
 
 
-## Clone Project
+## Setting up Apex Accessibility Web Application
+
+In order to run Apex Accessibility, we recommend cloning this repository locally:
+
 ```sh
+
 git clone https://github.com/Akshatj555/IITB-ApexAccessibility.git
 
 cd IITB-ApexAccessibility/apex_check/
 ```
 
-## Install Locally:
+Then install the dependencies:
 
 ```sh
 
 npm run install
 
+```
+
+Now to run the application, you can use the following:
+
+```sh
+
 npm run dev
 
 ```
+
 
