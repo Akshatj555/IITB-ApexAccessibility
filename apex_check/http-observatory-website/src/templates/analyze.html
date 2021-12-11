@@ -1,24 +1,23 @@
 <%= require ('html-loader?interpolate!./partials/header.html') %>
-
+    
     <nav>
         <div id="nav-tab" class="nav nav-tabs flex-column flex-md-row" role="tablist">
             <a class="nav-item nav-link active" id="nav-http-tab" href="#http" data-toggle="tab" data-target="#http-tab" role="tab" aria-controls="nav-http" aria-selected="true"><span data-octicon="chevron-right"> </span>HTTP Scan Summary</a>
             <a class="nav-item nav-link" id="nav-tls-tab" href="#tls" data-toggle="tab" data-target="#tls-tab" role="tab" aria-controls="nav-tls"><span data-octicon="chevron-right"> </span>TLS Scan Summary</a>
             <!-- <a class="nav-item nav-link" id="nav-ssh-tab" href="#ssh" data-toggle="tab" data-target="#ssh-tab" role="tab" aria-controls="nav-ssh"><span data-octicon="chevron-right"> </span>SSH Observatory</a> -->
-            <a class="nav-item nav-link" id="nav-third-party-tab" href="#third-party" data-toggle="tab" data-target="#third-party-tab" role="tab" aria-controls="nav-third"><span data-octicon="chevron-right"> </span>Third-party Tests</a>
+            <!-- <a class="nav-item nav-link" id="nav-third-party-tab" href="#third-party" data-toggle="tab" data-target="#third-party-tab" role="tab" aria-controls="nav-third"><span data-octicon="chevron-right"> </span>Third-party Tests</a> -->
         </div>
     </nav>
-
-    <div class="tab-content">
+   
+    <div id="editor"></div>
+    <div class="tab-content" id="htmlContent">
         <!-- HTTP Observatory -->
         <div class="tab-pane active" id="http-tab" role="tabpanel" aria-labelledby="nav-http-tab">
             <!-- progress bar -->
             <%= require ('mustache-loader!html-loader?interpolate!./partials/progress-bar.html')({id: 'http'}) %>
-
             <div class="d-none alert alert-danger text-center" id="http-status-code-alert">
                 This site returned an HTTP status code other than <strong>200 (OK)</strong>, which may cause its results to be inaccurate.
             </div>
-
             <div class="d-none" id="http-results">
                 <div id="scan-summary-row" class="row">
                     <div class="col-xs-12 col-lg-6">
@@ -28,7 +27,6 @@
                         <%= require ('html-loader!./analyze/http/recommendations.html') %>
                     </div>
                 </div>
-
                 <!-- this is a spacing div because recommendation uses h-100, which mucks up padding -->
                 <div class="d-lg-none pb-4"></div>
 
@@ -156,3 +154,36 @@
     </div>
 
 <%= require ('html-loader?interpolate!./partials/footer.html') %>
+
+<script type="module">
+    /* https://http-observatory.security.mozilla.org/api/v1/getScanResults?scan=23216150 */
+    /* https://tls-observatory.services.mozilla.com/api/v1/getScanResults?scan=47059316 */
+    setTimeout(function() { 
+
+            var element = document.getElementById('scan-hostname');
+            console.log("element: ",element)
+            var domain_name = element.innerText
+            var elementWithScanId = document.getElementById('scan-scan_id');
+            let sampleURL = 'https://http-observatory.security.mozilla.org/api/v1/getScanResults?scan=' + elementWithScanId.innerText
+            var finalJSON
+            fetch(sampleURL)
+            .then(res => {
+                finalJSON = res.json()
+                
+                return finalJSON
+            })
+            .then(out => {
+                console.log('Checkout this JSON! ', out)
+                const filename = 'data.json';
+                const jsonStr = JSON.stringify(out);
+
+                let elem = document.getElementById('scan-anchor');
+                elem.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(jsonStr));
+                elem.setAttribute('download', filename);
+                console.log("data json element: ",elem)
+            
+            })
+            .catch(err => { throw err });    
+     }, 4000);
+
+</script>

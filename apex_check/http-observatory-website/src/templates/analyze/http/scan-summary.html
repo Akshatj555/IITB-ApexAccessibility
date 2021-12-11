@@ -1,6 +1,8 @@
+
 <div class="card card-primary summary summary-condensed" id="scan-summary">
     <div class="card-header bg-primary text-center text-md-left text-white">
         <span class="h3">Scan Summary</span>
+        <button type="button" id="generatePDF" class="btn bg-white float-right expandy-panel-button disabled d-none d-md-block force-rescan"><a id="scan-anchor">Generate Report</a></button>
     </div>
     <div class="card-body pb-1">
         <div class="row">
@@ -16,10 +18,6 @@
                         <td class="text-nowrap">Host:</td>
                         <td class="text-break"><span class="d-none" id="scan-target-container"><span id="scan-target"></span> &rarr; </span><span id="scan-hostname"></span></td>
                     </tr>
-                    <!-- <tr>
-                        <td class="text-nowrap">Scan ID #:</td>
-                        <td><span id="scan-scan_id"></span></td>
-                    </tr> -->
                     <tr>
                         <td class="text-nowrap">Start Time:</td>
                         <td id="scan-start_time_l"></td>
@@ -29,16 +27,17 @@
                         <td><span id="scan-test_duration"></span> seconds</td>
                     </tr>
                     <tr>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                    </tr>
-                    <tr>
                         <td class="text-nowrap">Score:</td>
                         <td><span id="scan-score"></span>/100</td>
                     </tr>
                     <tr>
                         <td class="text-nowrap">Tests Passed:</td>
                         <td><span id="scan-tests_passed"></span>/<span id="scan-tests_quantity"></span></td>
+                    </tr>
+                    <!-- <tr></tr> -->
+                    <tr style="display: none;">
+                        <td class="text-nowrap">Scan ID #:</td>
+                        <td><span id="scan-scan_id"></span></td>
                     </tr>
                 </table>
             </div>
