@@ -1,189 +1,330 @@
 <%= require ('html-loader?interpolate!./partials/header.html') %>
-    
+
     <nav>
         <div id="nav-tab" class="nav nav-tabs flex-column flex-md-row" role="tablist">
-            <a class="nav-item nav-link active" id="nav-http-tab" href="#http" data-toggle="tab" data-target="#http-tab" role="tab" aria-controls="nav-http" aria-selected="true"><span data-octicon="chevron-right"> </span>HTTP Scan Summary</a>
-            <a class="nav-item nav-link" id="nav-tls-tab" href="#tls" data-toggle="tab" data-target="#tls-tab" role="tab" aria-controls="nav-tls"><span data-octicon="chevron-right"> </span>TLS Scan Summary</a>
+            <a class="nav-item nav-link active" id="nav-http-tab" href="#http" data-toggle="tab" data-target="#http-tab"
+                role="tab" aria-controls="nav-http" aria-selected="true"><span data-octicon="chevron-right"> </span>HTTP
+                Scan Summary</a>
+            <a class="nav-item nav-link" id="nav-tls-tab" href="#tls" data-toggle="tab" data-target="#tls-tab"
+                role="tab" aria-controls="nav-tls"><span data-octicon="chevron-right"> </span>TLS Scan Summary</a>
+            <a class="nav-item nav-link" id="nav-cookie-consent-tab" href="#cookie-consent" data-toggle="tab" data-target="#cookie-consent-tab" role="tab" aria-controls="nav-cookie-consent"><span data-octicon="chevron-right"> </span>Cookie Consent</a>
             <!-- <a class="nav-item nav-link" id="nav-ssh-tab" href="#ssh" data-toggle="tab" data-target="#ssh-tab" role="tab" aria-controls="nav-ssh"><span data-octicon="chevron-right"> </span>SSH Observatory</a> -->
             <!-- <a class="nav-item nav-link" id="nav-third-party-tab" href="#third-party" data-toggle="tab" data-target="#third-party-tab" role="tab" aria-controls="nav-third"><span data-octicon="chevron-right"> </span>Third-party Tests</a> -->
         </div>
     </nav>
-   
+
     <div id="editor"></div>
     <div class="tab-content" id="htmlContent">
         <!-- HTTP Observatory -->
         <div class="tab-pane active" id="http-tab" role="tabpanel" aria-labelledby="nav-http-tab">
             <!-- progress bar -->
-            <%= require ('mustache-loader!html-loader?interpolate!./partials/progress-bar.html')({id: 'http'}) %>
-            <div class="d-none alert alert-danger text-center" id="http-status-code-alert">
-                This site returned an HTTP status code other than <strong>200 (OK)</strong>, which may cause its results to be inaccurate.
-            </div>
-            <div class="d-none" id="http-results">
-                <div id="scan-summary-row" class="row">
-                    <div class="col-xs-12 col-lg-6">
-                        <%= require ('html-loader!./analyze/http/scan-summary.html') %>
-                    </div>
-                    <div class="col-xs-12 col-lg-6">
-                        <%= require ('html-loader!./analyze/http/recommendations.html') %>
-                    </div>
+            <%= require ('mustache-loader!html-loader?interpolate!./partials/progress-bar.html')({id: 'http' }) %>
+                <div class="d-none alert alert-danger text-center" id="http-status-code-alert">
+                    This site returned an HTTP status code other than <strong>200 (OK)</strong>, which may cause its
+                    results to be inaccurate.
                 </div>
-                <!-- this is a spacing div because recommendation uses h-100, which mucks up padding -->
-                <div class="d-lg-none pb-4"></div>
+                <div class="d-none" id="http-results">
+                    <div id="scan-summary-row" class="row">
+                        <div class="col-xs-12 col-lg-6">
+                            <%= require ('html-loader!./analyze/http/scan-summary.html') %>
+                        </div>
+                        <div class="col-xs-12 col-lg-6">
+                            <%= require ('html-loader!./analyze/http/recommendations.html') %>
+                        </div>
+                    </div>
+                    <!-- this is a spacing div because recommendation uses h-100, which mucks up padding -->
+                    <div class="d-lg-none pb-4"></div>
 
-                <!-- HTTP Observatory test results -->
-                <%= require ('html-loader!./analyze/http/test-scores.html') %>
+                    <!-- HTTP Observatory test results -->
+                    <%= require ('html-loader!./analyze/http/test-scores.html') %>
 
-                <!-- HTTP Observatory CSP analysis -->
-                <%= require ('html-loader!./analyze/http/csp-analysis.html') %>
+                        <!-- HTTP Observatory CSP analysis -->
+                        <%= require ('html-loader!./analyze/http/csp-analysis.html') %>
 
-                <!-- HTTP Observatory cookie results -->
-                <%= require ('html-loader!./analyze/http/cookies.html') %>
+                            <!-- HTTP Observatory cookie results -->
+                            <%= require ('html-loader!./analyze/http/cookies.html') %>
 
-                <!-- HTTP Observatory grade history results -->
-                <%= require ('html-loader!./analyze/http/grade-history.html') %>
+                                    <!-- HTTP Observatory grade history results -->
+                                    <%= require ('html-loader!./analyze/http/grade-history.html') %>
 
-                <!-- HTTP Observatory raw header test results -->
-                <%= require ('html-loader!./analyze/http/raw-server-headers.html') %>
-            </div>
+                                        <!-- HTTP Observatory raw header test results -->
+                                        <%= require ('html-loader!./analyze/http/raw-server-headers.html') %>
+                </div>
         </div>
 
         <!-- TLS Observatory -->
         <div class="tab-pane" id="tls-tab" role="tabpanel" aria-labelled-by="nav-tls-tab">
             <!-- progress bar -->
-            <%= require ('mustache-loader!html-loader?interpolate!./partials/progress-bar.html')({id: 'tls'}) %>
+            <%= require ('mustache-loader!html-loader?interpolate!./partials/progress-bar.html')({id: 'tls' }) %>
 
-            <div class="d-none" id="tls-results">
-                <!-- invalid cert warning panel -->
-                <div class="d-none alert alert-danger text-md-center" id="tls-observatory-invalid-cert-warning">
-                    This site uses an <strong>untrusted</strong> or <strong>invalid certificate</strong>. The following results ignore this error.
+                <div class="d-none" id="tls-results">
+                    <!-- invalid cert warning panel -->
+                    <div class="d-none alert alert-danger text-md-center" id="tls-observatory-invalid-cert-warning">
+                        This site uses an <strong>untrusted</strong> or <strong>invalid certificate</strong>. The
+                        following results ignore this error.
+                    </div>
+
+                    <!-- TLS Observatory scan summary -->
+                    <%= require ('html-loader!./analyze/tls/scan-summary.html') %>
+
+                        <!-- TLS Observatory certificate information -->
+                        <%= require ('html-loader!./analyze/tls/certificate-information.html') %>
+
+                            <!-- TLS Observatory cipher suites -->
+                            <%= require ('html-loader!./analyze/tls/cipher-suites.html') %>
+
+                                <!-- TLS Observatory miscellaneous -->
+                                <%= require ('html-loader!./analyze/tls/miscellaneous.html') %>
+
+                                    <!-- TLS Observatory suggestions -->
+                                    <%= require ('html-loader!./analyze/tls/suggestions.html') %>
                 </div>
-
-                <!-- TLS Observatory scan summary -->
-                <%= require ('html-loader!./analyze/tls/scan-summary.html') %>
-
-                <!-- TLS Observatory certificate information -->
-                <%= require ('html-loader!./analyze/tls/certificate-information.html') %>
-
-                <!-- TLS Observatory cipher suites -->
-                <%= require ('html-loader!./analyze/tls/cipher-suites.html') %>
-
-                <!-- TLS Observatory miscellaneous -->
-                <%= require ('html-loader!./analyze/tls/miscellaneous.html') %>
-
-                <!-- TLS Observatory suggestions -->
-                <%= require ('html-loader!./analyze/tls/suggestions.html') %>
-            </div>
         </div>
 
         <!-- SSH Observatory -->
-        <div class="tab-pane" id="ssh-tab" role="tabpanel" aria-labelledby="nav-ssh-tab">
-            <div id="ssh-scan-initiator" class="mt-3">
-                <button class="btn btn-light expandy-panel-button align-middle py-3 w-100" id="ssh-scan-initiator-btn" type="button">
-                  SSH Observatory scans are not performed automatically. Click here to initiate a scan.
-                </button>
-            </div>
+        <!-- Cookie-Consent Observatory -->
+        <div class="tab-pane" id="cookie-consent-tab" role="tabpanel" 
+        aria-labelledby="nav-cookie-consent-tab">
 
-            <!-- Notice about which system hosts the scans -->
-            <div class="alert alert-danger d-none mt-3 mx-3 px-3 py-3 rounded" id="ssh-scanner-alert" role="alert">
-              <div class="pb-3"><strong>Scan Failed: </strong>The Mozilla SSH Observatory scans from <code class="bg-light mb-3 px-1 py-1 rounded">sshscan.rubidus.com</code> at <code class="bg-light px-1 py-1 rounded">45.55.176.164</code>.</div>
+            <div id="accordion">
+            <div class="card"> <div class="card-header" id="cookie_type_header_card"> <h5 class="mb-0"> <button class="btn btn-link" data-toggle="collapse show" data-target="#cookie_type_collapse" aria-expanded="false" aria-controls="cookie_type_collapse"> <i id="cookie_type_icon" class="text-danger fa fa-exclamation-circle"></i>Prior consent to non-essential cookies <br></button> </h5> </div><div id="cookie_type_collapse" class="collapse show" aria-labelledby="cookie_type_header_card" data-parent="#accordion" style=""> <div class="card-body"> <div id="cookie_type_text_loading" style="display: inline"> <p class="text-secondary">Loading...</p></div><div id="cookie_type_text_ok" style="display: none"> <h5 class="text-danger">Phewww!! Seems like there is no cookie consent banner!</h5></div><div id="cookie_type_text_wrong" style="display: none;"> 
+                <h5 class="text-success">Cookie Consent Banner is there!</h5> 
+                <p class="text-success">Looks like there is a banner on the visitor's end.</p>
+                <h5 class="text-success">But wait... Looks Like there are still some third party cookies that are being stored without consent</h5> 
+                <h5 class="text-success">What is the problem?</h5>
+                <p class="text-success">The GDPR requires that European users be asked for their consent before installing cookies that are not essential to the proper functioning of the site (tracking cookies, for example).</p><h5>Problematic cookies:</h5><div id="accordion_cookie_type"></div></div></div></div></div></div></div>
 
-              <div>Many systems are configured with firewalls that block SSH access. To successfully scan with the SSH Observatory, access must be granted to Mozilla's scanning system.</div>
-            </div>
-
-            <!-- progress bar -->
-            <span id="ssh-progress-bar-container" class="d-none">
-                <%= require ('mustache-loader!html-loader?interpolate!./partials/progress-bar.html')({id: 'ssh'}) %>
-            </span>
-
-            <div class="d-none" id="ssh-results">
-                <!-- SSH Observatory scan results -->
-                <%= require ('html-loader!./analyze/ssh/scan-summary.html') %>
-
-                <!-- SSH Observatory recommendations -->
-                <%= require ('html-loader!./analyze/ssh/recommendations.html') %>
-
-                <!-- SSH Observatory miscellaneous -->
-                <%= require ('html-loader!./analyze/ssh/miscellaneous.html') %>
-
-                <!-- SSH Observatory version information -->
-                <%= require ('html-loader!./analyze/ssh/version-information.html') %>
-            </div>
         </div>
 
         <!-- Third party stuff -->
-        <div class="tab-pane" id="third-party-tab" role="tabpanel" aria-labelledby="nav-third-party-tab">
+        <div style="display: none;" class="tab-pane" id="third-party-tab" role="tabpanel" aria-labelledby="nav-third-party-tab">
             <h3 class="mt-4 mt-sm-3">
-              <span class="d-none d-md-inline">Email Security</span>
-              <span class="d-md-none"></span>
+                <span class="d-none d-md-inline">Email Security</span>
+                <span class="d-md-none"></span>
             </h3>
             <hr />
 
             <!-- GCA -->
             <%= require ('html-loader?interpolate!./analyze/third-party/gca.html') %>
-            <hr />
+                <hr />
 
-            <h3 class="mt-4 mt-sm-3">
-              <span class="d-none d-md-inline">Transport Layer Security</span>
-              <span class="d-md-none">TLS &amp; SSL</span>
-            </h3>
-            <hr />
-            <!-- Qualys SSL Labs -->
-            <%= require ('html-loader?interpolate!./analyze/third-party/ssllabs.html') %>
+                <h3 class="mt-4 mt-sm-3">
+                    <span class="d-none d-md-inline">Transport Layer Security</span>
+                    <span class="d-md-none">TLS &amp; SSL</span>
+                </h3>
+                <hr />
+                <!-- Qualys SSL Labs -->
+                <%= require ('html-loader?interpolate!./analyze/third-party/ssllabs.html') %>
 
-            <!-- htbridge.com -->
-            <%= require ('html-loader?interpolate!./analyze/third-party/immuniweb.html') %>
+                    <!-- htbridge.com -->
+                    <%= require ('html-loader?interpolate!./analyze/third-party/immuniweb.html') %>
 
-            <!-- tls.imirhil.fr -->
-            <%= require ('html-loader?interpolate!./analyze/third-party/tlsimirhilfr.html') %>
+                        <!-- tls.imirhil.fr -->
+                        <%= require ('html-loader?interpolate!./analyze/third-party/tlsimirhilfr.html') %>
 
-            <h3 class="mt-4 mt-sm-3">
-              <span class="d-none d-md-inline">HTTP Headers &amp; Content Security</span>
-              <span class="d-md-none">HTTP Headers</span>
-            </h3>
-            <hr />
+                            <h3 class="mt-4 mt-sm-3">
+                                <span class="d-none d-md-inline">HTTP Headers &amp; Content Security</span>
+                                <span class="d-md-none">HTTP Headers</span>
+                            </h3>
+                            <hr />
 
-            <!-- securityheaders.com -->
-            <%= require ('html-loader?interpolate!./analyze/third-party/securityheaders.html') %>
+                            <!-- securityheaders.com -->
+                            <%= require ('html-loader?interpolate!./analyze/third-party/securityheaders.html') %>
 
-            <h3 class="mt-5">Miscellaneous</h3>
-            <hr />
+                                <h3 class="mt-5">Miscellaneous</h3>
+                                <hr />
 
-            <!-- hstspreload.org -->
-            <%= require ('html-loader?interpolate!./analyze/third-party/hstspreload.html') %>
+                                <!-- hstspreload.org -->
+                                <%= require ('html-loader?interpolate!./analyze/third-party/hstspreload.html') %>
         </div>
     </div>
 
-<%= require ('html-loader?interpolate!./partials/footer.html') %>
+    <%= require ('html-loader?interpolate!./partials/footer.html') %>
 
-<script type="module">
-    /* https://http-observatory.security.mozilla.org/api/v1/getScanResults?scan=23216150 */
-    /* https://tls-observatory.services.mozilla.com/api/v1/getScanResults?scan=47059316 */
-    setTimeout(function() { 
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-            var element = document.getElementById('scan-hostname');
-            console.log("element: ",element)
-            var domain_name = element.innerText
-            var elementWithScanId = document.getElementById('scan-scan_id');
-            let sampleURL = 'https://http-observatory.security.mozilla.org/api/v1/getScanResults?scan=' + elementWithScanId.innerText
-            var finalJSON
-            fetch(sampleURL)
-            .then(res => {
-                finalJSON = res.json()
+        <script type="module">
+            /* https://http-observatory.security.mozilla.org/api/v1/getScanResults?scan=23216150 */
+            /* https://tls-observatory.services.mozilla.com/api/v1/getScanResults?scan=47059316 */
+            // https://tls-observatory.services.mozilla.com/api/v1/results?id=47059316
+            setTimeout(function () {
+                // SSL Results
+                var element = document.getElementById('scan-hostname');
+                console.log("element: ", element)
+                var domain_name = element.innerText
+                var elementWithScanId = document.getElementById('scan-scan_id');
+                let sampleURL = 'https://http-observatory.security.mozilla.org/api/v1/getScanResults?scan=' + elementWithScanId.innerText
+                var finalJSON
+                fetch(sampleURL)
+                    .then(res => {
+                        finalJSON = res.json()
+
+                        return finalJSON
+                    })
+                    .then(out => {
+                        console.log('Checkout this SSL JSON! ', out)
+                        const filename = 'data.json';
+                        const jsonStr = JSON.stringify(out);
+
+                        let elem = document.getElementById('scan-anchor');
+                        elem.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(jsonStr));
+                        elem.setAttribute('download', filename);
+                        console.log("data json element: ", elem)
+
+                    })
+                    .catch(err => { throw err });
+
+
+                var tlselement = document.getElementById('scan-hostname');
+                console.log("element: ", tlselement)
+                var tls_domain_name = tlselement.innerText
+                var tlsElementWithScanId = document.getElementById('tls-summary-scan_id');
+                let tlsSampleURL = 'https://tls-observatory.services.mozilla.com/api/v1/results?id=' + tlsElementWithScanId.innerText
+                var tlsFinalJSON
+                fetch(tlsSampleURL)
+                    .then(res => {
+                        tlsFinalJSON = res.json()
+
+                        return tlsFinalJSON
+                    })
+                    .then(out => {
+                        console.log('Checkout this TLS JSON! ', out)
+                        const filename = 'data.json';
+                        const jsonStr = JSON.stringify(out);
+
+                        let elem = document.getElementById('tls-scan-anchor');
+                        elem.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(jsonStr));
+                        elem.setAttribute('download', filename);
+                        console.log("data json element: ", elem)
+
+                    })
+                    .catch(err => { throw err });
+
+                let formData = {
+                    domain: tls_domain_name
+                }
+                var reportResp = null
+                $.ajax({
+                    type: "POST",
+                    beforeSend: function (request) {
+                        request.setRequestHeader("accept", "*/*");
+                        request.setRequestHeader("accept-language", "en-US,en;q=0.9");
+                        request.setRequestHeader("content-type", "application/json");
+                        request.setRequestHeader("sec-ch-ua", "\"Chromium\";v=\"94\", \"Google Chrome\";v=\"94\", \";Not A Brand\";v=\"99\"");
+                        request.setRequestHeader("sec-ch-ua-mobile", "?0");
+                        request.setRequestHeader("sec-ch-ua-platform", "\"Linux\"");
+                        request.setRequestHeader("sec-fetch-dest", "empty");
+                        request.setRequestHeader("sec-fetch-mode", "cors");
+                        request.setRequestHeader("sec-fetch-site", "same-origin");
+                        request.setRequestHeader("referrer", "https://gdpr-checker.herokuapp.com/");
+                        request.setRequestHeader("referrerPolicy", "strict-origin-when-cross-origin");
+                        request.setRequestHeader("mode", "cors");
+                        request.setRequestHeader("credentials", "omit");
+                    },
+                    referrer: "https://gdpr-checker.herokuapp.com/",
+                    referrerPolicy: "strict-origin-when-cross-origin",
+                    mode: "cors",
+                    credentials: "omit",
+                    url: "https://gdpr-checker.herokuapp.com/report",
+                    dataType: 'json',
+                    data: JSON.stringify(formData),
+                    processData: false,
+                    async: false,
+                    success: function (msg) {
+                        console.log("The result =", msg);
+                        reportResp = msg
+                    },
+                    error: function (jqXHR, textStatus, err) {
+                        console.log(jqXHR, '\n', textStatus, '\n', err)
+                    }
+                })
+
+                console.log("resport response uuid : ", reportResp.uuid)
                 
-                return finalJSON
-            })
-            .then(out => {
-                console.log('Checkout this JSON! ', out)
-                const filename = 'data.json';
-                const jsonStr = JSON.stringify(out);
+                const eventSource = new EventSource(
+                    "https://gdpr-checker.herokuapp.com/report/" + reportResp.uuid
+                )
+                
+                console.log("event source data: ", eventSource.report)
 
-                let elem = document.getElementById('scan-anchor');
-                elem.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(jsonStr));
-                elem.setAttribute('download', filename);
-                console.log("data json element: ",elem)
-            
-            })
-            .catch(err => { throw err });    
-     }, 4000);
+                $.ajax({
+                    type: "GET",
+                    url: "https://gdpr-checker.herokuapp.com/report/" + reportResp.uuid,
+                    processData: false,
+                    success: function (msg) {
+                        console.log("Final report json data =", msg);
+                        
+                        let tempArr = msg.split("data:")
+                        let jsonReportData = JSON.parse(tempArr[tempArr.length - 1])
 
-</script>
+                        console.log("Object format of the report data: ",jsonReportData)
+
+                        function cookietypeblock(e) {
+                            let t = document.getElementById("cookie_type_icon"),
+                                o = document.getElementById("cookie_type_text_ok"),
+                                a = document.getElementById("cookie_type_text_loading"),
+                                l = document.getElementById("cookie_type_text_wrong"),
+                                r = document.getElementById("accordion_cookie_type"),
+                                s = 0,
+                                cookie_collapse = document.getElementById("cookie_type_collapse");
+                                
+                            e.report.urls[0] && e.report.urls[0].cookies && e.report.urls[0].cookies.length > 0 && (r.innerHTML = "", e.report.urls[0].cookies.forEach(e => {
+                                if ("Marketing" === e.type || "Analytics" === e.type) {
+                                    s++;
+                                    let t = e.provider ? e.provider + " (" + e.name + ")" : e.name,
+                                        o = e.termsLink ? '<a href="' + e.termsLink + '" target="_blank" class="text-info">User Privacy & GDPR Rights Portals</a>' : "",
+                                        a = e.description ? e.description : "No description available",
+                                        l = e.retentionPeriod ? e.retentionPeriod : "Unknown";
+                                    r.innerHTML += '<div class="card card-next"><div class="card-header" id="cookie_type_sub_header_card' + s + '"><h5 class="mb-0"><button class="btn btn-link collapsed" data-toggle="collapse"data-target="#cookie_type_sub_collapse' + s + '" aria-expanded="false" aria-controls="cookie_type_sub_collapse' + s + '">' + t + '<br></button></h5></div><div id="cookie_type_sub_collapse' + s + '" class="collapse" aria-labelledby="cookie_type_sub_header_card' + s + '"data-parent="#accordion_cookie_type"><div class="card-body"><h5 style="display: inline">Name: ' + e.name + '</h5><br><h5 style="display: inline">Provider: </h5><a>' + e.provider + '</a><br><h5 style="display: inline" class="text-danger">Type: </h5><a class="text-danger">' + e.type + '</a><br><h5 style="display: inline">Description: </h5><a><blockquote class="generic-blockquote">' + a + '</blockquote></a><h5 style="display: inline">Retention period: </h5><a>' + l + '</a><br><h5 style="display: inline">Domain: </h5><a>' + e.domain + "</a><br>" + o + "</div></div></div>"
+                                }
+                            })), s > 0 ? (t.classList.toggle("text-danger","fa","fa-exclamation-circle"), o.style["display"] = "none", a.style["display"] = "none", l.style["display"] = "block") : (t.classList.toggle("text-success", "fa", "fa-check-circle"), o.style["display"] = "block", a.style["display"] = "none", l.style["display"] = "none")
+
+                            cookie_collapse.appendChild(r)
+                        }
+
+                        cookietypeblock(jsonReportData)
+                    },
+                    error: function (jqXHR, textStatus, err) {
+                        console.log(jqXHR, '\n', textStatus, '\n', err)
+                    }
+                })
+
+                // fetch('https://gdpr-checker.herokuapp.com/report', {
+                //     method: "POST",
+                //     body: JSON.stringify(formData),
+                //     headers: {
+                //         "accept": "*/*",
+                //         "accept-language": "en-US,en;q=0.9",
+                //         "content-type": "application/json",
+                //         "sec-ch-ua": "\"Chromium\";v=\"94\", \"Google Chrome\";v=\"94\", \";Not A Brand\";v=\"99\"",
+                //         "sec-ch-ua-mobile": "?0",
+                //         "sec-ch-ua-platform": "\"Linux\"",
+                //         "sec-fetch-dest": "empty",
+                //         "sec-fetch-mode": "cors",
+                //         "sec-fetch-site": "same-origin",
+                //     },
+                //     referrer: "https://gdpr-checker.herokuapp.com/",
+                //     referrerPolicy: "strict-origin-when-cross-origin",
+                //     mode: "cors",
+                //     credentials: "omit"
+                // }).then(res => {
+                //     // tlsFinalJSON = res.json()
+
+                //     // return tlsFinalJSON
+                //     res.json()
+                // })
+                // .then(out => {
+                //     console.log('Report id: ', out)
+                //     // const filename = 'data.json';
+                //     // const jsonStr = JSON.stringify(out);
+
+                //     // let elem = document.getElementById('tls-scan-anchor');
+                //     // elem.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(jsonStr));
+                //     // elem.setAttribute('download', filename);
+                //     // console.log("data json element: ",elem)
+
+                // })
+                // .catch(err => { throw err });
+            }, 5000);
+
+        </script>
