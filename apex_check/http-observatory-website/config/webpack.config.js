@@ -67,7 +67,7 @@ plugins = [
     template: 'Reveal/index.html'
   }),
   new HtmlWebpackPlugin({
-    filename: 'home.html',
+    filename: 'apex-scan.html',
     title: 'Apex Accessibility',
     template: 'src/templates/index.html'
   }),

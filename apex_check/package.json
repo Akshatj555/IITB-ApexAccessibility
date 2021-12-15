@@ -26,8 +26,8 @@
   },
   "dependencies": {},
   "scripts": {
-    "dev": "(cd 'http-observatory-website' && npm run watch && cd ..) & (cd 'apex-accessibilty-tool' && PORT=8080 node index.js && cd ..)",
-    "install": "(cd 'http-observatory-website' && npm install && cd ..) & (cd 'apex-accessibilty-tool' && npm install && cd ..)",
+    "dev": "(cd 'puppeteer-api' && npm start && cd ..) & (cd 'http-observatory-website' && npm run watch && cd ..) & (cd 'apex-accessibilty-tool' && PORT=8080 node index.js && cd ..)",
+    "install": "(cd 'puppeteer-api' && npm install && cd ..) & (cd 'http-observatory-website' && npm install && cd ..) & (cd 'apex-accessibilty-tool' && npm install && cd ..)",
     "open": "open apex_check/Reveal/index.html"
   }
 }

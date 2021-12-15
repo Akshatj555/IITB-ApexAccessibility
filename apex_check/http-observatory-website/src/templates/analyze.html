@@ -87,9 +87,16 @@
         aria-labelledby="nav-cookie-consent-tab">
 
             <div id="accordion">
-            <div class="card"> <div class="card-header" id="cookie_type_header_card"> <h5 class="mb-0"> <button class="btn btn-link" data-toggle="collapse show" data-target="#cookie_type_collapse" aria-expanded="false" aria-controls="cookie_type_collapse"> <i id="cookie_type_icon" class="text-danger fa fa-exclamation-circle"></i>Prior consent to non-essential cookies <br></button> </h5> </div><div id="cookie_type_collapse" class="collapse show" aria-labelledby="cookie_type_header_card" data-parent="#accordion" style=""> <div class="card-body"> <div id="cookie_type_text_loading" style="display: inline"> <p class="text-secondary">Loading...</p></div><div id="cookie_type_text_ok" style="display: none"> <h5 class="text-danger">Phewww!! Seems like there is no cookie consent banner!</h5></div><div id="cookie_type_text_wrong" style="display: none;"> 
-                <h5 class="text-success">Cookie Consent Banner is there!</h5> 
-                <p class="text-success">Looks like there is a banner on the visitor's end.</p>
+            <div class="card"> <div class="card-header" id="cookie_type_header_card"> <h5 class="mb-0"> <button class="btn btn-link" data-toggle="collapse show" data-target="#cookie_type_collapse" aria-expanded="false" aria-controls="cookie_type_collapse"> <i id="cookie_type_icon" class="text-danger fa fa-exclamation-circle"></i>Prior consent to non-essential cookies <br></button> </h5> </div><div id="cookie_type_collapse" class="collapse show" aria-labelledby="cookie_type_header_card" data-parent="#accordion" style=""> <div class="card-body"> <div id="cookie_type_text_loading" style="display: inline"> <p class="text-secondary">Loading...</p></div>
+            <div id="cookie_type_text_ok" style="display: none"> 
+                <img class="align-items-center" src="/images/example.png" alt="Website-Consent-Banner">
+                    <h5 class="text-danger">Oh no!! Seems like there is no cookie consent banner!</h5>
+                </div>
+            </div>
+            <div id="cookie_type_text_wrong" style="display: none;"> 
+                <img class="align-items-center" src="/images/example.png" alt="Website-Consent-Banner">
+                    <h5 class="text-success">Cookie Consent Banner is there!</h5> 
+                    <p class="text-success">Looks like there is a banner on the visitor's end.</p>
                 <h5 class="text-success">But wait... Looks Like there are still some third party cookies that are being stored without consent</h5> 
                 <h5 class="text-success">What is the problem?</h5>
                 <p class="text-success">The GDPR requires that European users be asked for their consent before installing cookies that are not essential to the proper functioning of the site (tracking cookies, for example).</p><h5>Problematic cookies:</h5><div id="accordion_cookie_type"></div></div></div></div></div></div></div>
@@ -239,13 +246,30 @@
                     }
                 })
 
+
+                var puppeteerResp
+                var localServerUrl = 'http://localhost:4000/search?searchquery=http://' + domain_name
+                
+                var reqHeaders = {
+                    'Access-Control-Allow-Origin':'http://localhost:4000',
+                    'Access-Control-Allow-Credentials': '*'
+                }
+
+                fetch(localServerUrl,{
+                        method: 'GET',
+                        headers: reqHeaders
+                    })
+                    .then(res => res.json())
+                    .then(out => {
+                        console.log('Response from local server! ', out)
+                        puppeteerResp = out
+                        console.log("local server out object type:", typeof puppeteerResp)
+                    })
+                    .catch(err => { throw err });
+
+
+
                 console.log("resport response uuid : ", reportResp.uuid)
-                
-                const eventSource = new EventSource(
-                    "https://gdpr-checker.herokuapp.com/report/" + reportResp.uuid
-                )
-                
-                console.log("event source data: ", eventSource.report)
 
                 $.ajax({
                     type: "GET",
@@ -278,7 +302,6 @@
                                     r.innerHTML += '<div class="card card-next"><div class="card-header" id="cookie_type_sub_header_card' + s + '"><h5 class="mb-0"><button class="btn btn-link collapsed" data-toggle="collapse"data-target="#cookie_type_sub_collapse' + s + '" aria-expanded="false" aria-controls="cookie_type_sub_collapse' + s + '">' + t + '<br></button></h5></div><div id="cookie_type_sub_collapse' + s + '" class="collapse" aria-labelledby="cookie_type_sub_header_card' + s + '"data-parent="#accordion_cookie_type"><div class="card-body"><h5 style="display: inline">Name: ' + e.name + '</h5><br><h5 style="display: inline">Provider: </h5><a>' + e.provider + '</a><br><h5 style="display: inline" class="text-danger">Type: </h5><a class="text-danger">' + e.type + '</a><br><h5 style="display: inline">Description: </h5><a><blockquote class="generic-blockquote">' + a + '</blockquote></a><h5 style="display: inline">Retention period: </h5><a>' + l + '</a><br><h5 style="display: inline">Domain: </h5><a>' + e.domain + "</a><br>" + o + "</div></div></div>"
                                 }
                             })), s > 0 ? (t.classList.toggle("text-danger","fa","fa-exclamation-circle"), o.style["display"] = "none", a.style["display"] = "none", l.style["display"] = "block") : (t.classList.toggle("text-success", "fa", "fa-check-circle"), o.style["display"] = "block", a.style["display"] = "none", l.style["display"] = "none")
-
                             cookie_collapse.appendChild(r)
                         }
 
@@ -289,42 +312,6 @@
                     }
                 })
 
-                // fetch('https://gdpr-checker.herokuapp.com/report', {
-                //     method: "POST",
-                //     body: JSON.stringify(formData),
-                //     headers: {
-                //         "accept": "*/*",
-                //         "accept-language": "en-US,en;q=0.9",
-                //         "content-type": "application/json",
-                //         "sec-ch-ua": "\"Chromium\";v=\"94\", \"Google Chrome\";v=\"94\", \";Not A Brand\";v=\"99\"",
-                //         "sec-ch-ua-mobile": "?0",
-                //         "sec-ch-ua-platform": "\"Linux\"",
-                //         "sec-fetch-dest": "empty",
-                //         "sec-fetch-mode": "cors",
-                //         "sec-fetch-site": "same-origin",
-                //     },
-                //     referrer: "https://gdpr-checker.herokuapp.com/",
-                //     referrerPolicy: "strict-origin-when-cross-origin",
-                //     mode: "cors",
-                //     credentials: "omit"
-                // }).then(res => {
-                //     // tlsFinalJSON = res.json()
-
-                //     // return tlsFinalJSON
-                //     res.json()
-                // })
-                // .then(out => {
-                //     console.log('Report id: ', out)
-                //     // const filename = 'data.json';
-                //     // const jsonStr = JSON.stringify(out);
-
-                //     // let elem = document.getElementById('tls-scan-anchor');
-                //     // elem.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(jsonStr));
-                //     // elem.setAttribute('download', filename);
-                //     // console.log("data json element: ",elem)
-
-                // })
-                // .catch(err => { throw err });
             }, 5000);
 
         </script>
